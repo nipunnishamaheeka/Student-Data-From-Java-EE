@@ -1,29 +1,48 @@
 $(document).ready(function () {
-  $("#studentForm").on("submit", function (event) {
-    let isValid = true;
-    let errorMessage = "";
+    $("#studentForm").on("submit", function (event) {
+        event.preventDefault();
 
-    const name = $("#name").val();
-    const email = $("#email").val();
+        // Get Values from the form input
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var city = $("#city").val();
+        var level = $("#level").val();
+        var studentData = {
+            name: name,
+            email: email,
+            city: city,
+            level: level
+        };
 
-    const namePattern = /^[A-Za-z\s]+$/;
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        console.log(studentData);
+            
+        // Create Json
 
-    if (!namePattern.test(name)) {
-      errorMessage += "Name should only contain letters and spaces.<br>";
-      isValid = false;
-    }
+        const studentJSON = JSON.stringify(studentData);
+        console.log(studentJSON);
 
-    if (!emailPattern.test(email)) {
-      errorMessage += "Please enter a valid email address.<br>";
-      isValid = false;
-    }
-
-    if (!isValid) {
-      $("#error-message").html(errorMessage);
-      event.preventDefault(); // Prevent form submission
-    } else {
-      $("#error-message").html("");
-    }
-  });
+        // Introduce AJAX
+        const http = new XMLHttpRequest()
+        http.onreadystatechange = () => {
+            if (http.readyState == 4) {
+                if (http.status == 200) {
+                    var responseTextJSON = JSON.stringify(http.responseText);
+                    console.log(responseTextJSON);
+                    
+                } else {
+                    console.error("Error Occured");
+                    console.error("Status" + http.status);
+                    console.error("Ready State" + http.readyState);
+                }
+                 
+            } else {
+                console.error("Ready State" + http.readyState);
+                
+             }
+        
+        }
+        http.open("POST", "http://localhost:8080/app/student");
+        http.setRequestHeader("Content-Type", "app/json")
+        http.send(studentData);
+    })
 });

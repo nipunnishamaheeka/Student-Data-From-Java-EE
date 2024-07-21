@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Data Form</title>
     <link rel="stylesheet" href="/style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
 </head>
 <body>
     <div class="student-Data-Form">
@@ -24,10 +25,12 @@
             <input type="text" name="level" id="level" placeholder="Enter your level" required><br><br>
             
             <input type="submit" value="Submit">
+
             <input type="reset" value="Reset">
         </form>
         <div id="error-message" class="error-message"></div>
     </div>
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

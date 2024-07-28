@@ -8,14 +8,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lk.ijse.gdse68.studentmanagementprotal.dto.StudentDTO;
 import lk.ijse.gdse68.studentmanagementprotal.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = "/student")
+import static com.mysql.cj.conf.PropertyKey.logger;
+
+@WebServlet(urlPatterns = "/student",loadOnStartup = 1)
 public class Student extends HttpServlet {
+    static Logger logger = LoggerFactory.getLogger(Student.class);
+
     Connection connection;
     public static String SAVE_STUDENT = "INSERT INTO student (id,name,email,city,level) VALUES(?,?,?,?,?)";
     public static String GET_STUDENT = "SELECT * FROM student WHERE id=?";
@@ -24,6 +30,7 @@ public class Student extends HttpServlet {
 
     @Override
     public void init() {
+        logger.info("Student Controller Initiated");
         try {
             var dbClass = getServletContext().getInitParameter("db-class");
             var dbUrl = getServletContext().getInitParameter("dburl");
